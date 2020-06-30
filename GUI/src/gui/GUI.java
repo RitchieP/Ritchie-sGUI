@@ -11,7 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import java.io.OutputStream;
 import backend.HangmanApp;
+import java.awt.AWTException;
+import java.io.PrintStream;
 
 
 public class GUI {
@@ -23,6 +27,33 @@ public class GUI {
     private static BufferedReader bufferedFileReader;
     private static StringBuilder strBuilder = new StringBuilder();
     static String display;
+    
+    public static void main(String[] args)
+    {
+        intro();
+    }
+    
+    public static void intro() {
+        JFrame frame = new JFrame("Ritchie Game Code");
+        JPanel panel = new JPanel();
+        
+        label = new JLabel();
+        label.setText("Press the button to continue");
+        label.setBounds(10, 20, 200, 30);
+        panel.add(label);
+
+        button = new JButton("Hangman Game");
+        button.setBounds (10, 50, 200, 30);
+        button.addActionListener(new ActionForButton());
+        panel.add(button);
+
+        panel.setLayout(null);
+
+        frame.setSize(500, 400);
+        frame.add(panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
     
     public static void mainPage() throws IOException
     {
@@ -45,6 +76,27 @@ public class GUI {
 
         codeFrame.setVisible(true);
     }
+    
+    
+   public static void mainPageTwo() {
+       JFrame frame = new JFrame("Game");
+       JTextArea text = new JTextArea(50, 10);
+       frame.setSize(60, 20);
+       frame.add(text);
+       PrintStream printStream = new PrintStream(new CustomOutputStream(text));
+       System.setOut(printStream);
+       System.setErr(printStream);
+       PrintStream standardOut = System.out;
+       standardOut.println("this is run");
+//       HangmanApp obj = new HangmanApp();
+//       try {
+//           obj.main();
+//       }
+//       catch (IOException | AWTException | InterruptedException e){
+//           System.out.println(e.toString());
+//       }
+       frame.setVisible(true);
+   }
 
     public static String getCode() throws IOException
     {
@@ -78,29 +130,6 @@ public class GUI {
         }
         return display;
     }
-
-    public static void main(String[] args)
-    {
-        JFrame frame = new JFrame("Ritchie Game Code");
-        JPanel panel = new JPanel();
-        
-        label = new JLabel();
-        label.setText("Press the button to continue");
-        label.setBounds(10, 20, 200, 30);
-        panel.add(label);
-
-        button = new JButton("Hangman Game");
-        button.setBounds (10, 50, 200, 30);
-        button.addActionListener(new ActionForButton());
-        panel.add(button);
-
-        panel.setLayout(null);
-
-        frame.setSize(500, 400);
-        frame.add(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
 }
 
 
@@ -110,15 +139,29 @@ class ActionForButton implements ActionListener {
     @Override
     public void actionPerformed (ActionEvent e)
     {
-        try
-        {
-            GUI.mainPage();
-        }
-        catch (IOException e1)
-        {
-            System.out.println ("File cannot be found");
-        }
+        GUI.mainPageTwo();
+//        try
+//        {
+//            GUI.mainPage();
+//        }
+//        catch (IOException e1)
+//        {
+//            System.out.println ("File cannot be found");
+//        }
     }
+}
 
+
+class CustomOutputStream extends OutputStream {
+    private JTextArea textArea;
     
+    public CustomOutputStream(JTextArea textArea) {
+        this.textArea = textArea;
+    }
+    
+    @Override
+    public void write(int b) throws IOException {
+        textArea.append(String.valueOf((char)b));
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+    }
 }

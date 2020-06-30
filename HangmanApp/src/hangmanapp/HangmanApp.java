@@ -1,0 +1,67 @@
+/*
+    Hangman app by Ritchie
+    21/5/2020
+*/
+
+package hangmanapp;
+
+import java.awt.AWTException;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class HangmanApp
+{
+    public static void main(String[] args) throws IOException, AWTException, InterruptedException
+    {
+        Scanner sc = new Scanner (System.in);
+        System.out.println ("Welcome to Hangman by Ritchie!");
+        boolean doYouWantToPlay = true;
+
+        while (doYouWantToPlay)
+        {
+            System.out.println ("Let's Begin!");
+            Hangman game = new Hangman();
+
+            do
+            {
+                //Setup the board
+                System.out.println ();
+                System.out.println (game.drawPicture());
+                System.out.println ();
+                System.out.println (game.getFormalCurrentGuess());
+                System.out.println (game.mysteryWord);
+
+                //Get the guess
+                System.out.println ("Enter a character.");
+                char guess = (sc.next().toLowerCase()).charAt(0);
+                System.out.println ();
+
+                //check if the character have been guessed
+                while (game.isGuessed(guess))
+                {
+                    System.out.println ("Try again. Character already guessed");
+                    guess = (sc.next().toLowerCase()).charAt(0);
+                }
+
+                game.clearConsole();
+
+                if (game.playGuess(guess))
+                {
+                    System.out.println ("Good guess!");
+                }
+                else
+                {
+                    System.out.println ("Character not in the word.");
+                }
+            }
+            while (!game.gameOver());
+
+            System.out.println ();
+            System.out.println ("Enter Y to keep playing"
+                + " or anything else to exit.");
+            Character response = (sc.next().toUpperCase()).charAt(0);
+            doYouWantToPlay = (response == 'Y');
+        }
+    }
+
+}

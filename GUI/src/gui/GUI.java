@@ -11,9 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import backend.HangmanApp;
 
-public class GUI implements ActionListener {
 
+public class GUI {
+    
     private static JButton button;
     private static JLabel code;
     private static JLabel label;
@@ -21,22 +23,8 @@ public class GUI implements ActionListener {
     private static BufferedReader bufferedFileReader;
     private static StringBuilder strBuilder = new StringBuilder();
     static String display;
-
-    //This is the button function
-    @Override
-    public void actionPerformed (ActionEvent e)
-    {
-        try
-        {
-            createFrame();
-        }
-        catch (IOException e1)
-        {
-            System.out.println ("File cannot be found");
-        }
-    }
-
-    public void createFrame() throws IOException
+    
+    public static void mainPage() throws IOException
     {
         JFrame codeFrame = new JFrame("Hangman Game");
         JPanel codePanel = new JPanel();
@@ -58,7 +46,7 @@ public class GUI implements ActionListener {
         codeFrame.setVisible(true);
     }
 
-    public String getCode() throws IOException
+    public static String getCode() throws IOException
     {
         try
         {
@@ -95,16 +83,16 @@ public class GUI implements ActionListener {
     {
         JFrame frame = new JFrame("Ritchie Game Code");
         JPanel panel = new JPanel();
-
-        button = new JButton("Hangman Game");
-        button.setBounds (10, 50, 200, 30);
-        button.addActionListener(new GUI());
-        panel.add(button);
-
+        
         label = new JLabel();
         label.setText("Press the button to continue");
         label.setBounds(10, 20, 200, 30);
         panel.add(label);
+
+        button = new JButton("Hangman Game");
+        button.setBounds (10, 50, 200, 30);
+        button.addActionListener(new ActionForButton());
+        panel.add(button);
 
         panel.setLayout(null);
 
@@ -113,4 +101,24 @@ public class GUI implements ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
+}
+
+
+class ActionForButton implements ActionListener {
+
+    //This is the button function
+    @Override
+    public void actionPerformed (ActionEvent e)
+    {
+        try
+        {
+            GUI.mainPage();
+        }
+        catch (IOException e1)
+        {
+            System.out.println ("File cannot be found");
+        }
+    }
+
+    
 }

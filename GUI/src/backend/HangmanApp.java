@@ -16,7 +16,6 @@ public class HangmanApp
         while (doYouWantToPlay)
         {
             System.out.println ("Let's Begin!");
-            // TODO: missing class
             Hangman game = new Hangman();
 
             do

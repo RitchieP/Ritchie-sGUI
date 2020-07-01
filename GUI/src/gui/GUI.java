@@ -34,25 +34,27 @@ public class GUI {
     }
     
     public static void intro() {
-        JFrame frame = new JFrame("Ritchie Game Code");
-        JPanel panel = new JPanel();
-        
-        label = new JLabel();
-        label.setText("Press the button to continue");
-        label.setBounds(10, 20, 200, 30);
-        panel.add(label);
-
-        button = new JButton("Hangman Game");
-        button.setBounds (10, 50, 200, 30);
-        button.addActionListener(new ActionForButton());
-        panel.add(button);
-
-        panel.setLayout(null);
-
-        frame.setSize(500, 400);
-        frame.add(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+//        JFrame frame = new JFrame("Ritchie Game Code");
+//        JPanel panel = new JPanel();
+//        
+//        label = new JLabel();
+//        label.setText("Press the button to continue");
+//        label.setBounds(10, 20, 200, 30);
+//        panel.add(label);
+//
+//        button = new JButton("Hangman Game");
+//        button.setBounds (10, 50, 200, 30);
+//        button.addActionListener(new ActionForButton());
+//        panel.add(button);
+//
+//        panel.setLayout(null);
+//
+//        frame.setSize(300, 300);
+//        frame.add(panel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setVisible(true);
+        Intro form = new Intro();
+        form.setVisible(true);
     }
     
     public static void mainPage() throws IOException
@@ -79,23 +81,30 @@ public class GUI {
     
     
    public static void mainPageTwo() {
-       JFrame frame = new JFrame("Game");
-       JTextArea text = new JTextArea(50, 10);
-       frame.setSize(60, 20);
-       frame.add(text);
-       PrintStream printStream = new PrintStream(new CustomOutputStream(text));
-       System.setOut(printStream);
-       System.setErr(printStream);
-       PrintStream standardOut = System.out;
-       standardOut.println("this is run");
-//       HangmanApp obj = new HangmanApp();
-//       try {
-//           obj.main();
-//       }
-//       catch (IOException | AWTException | InterruptedException e){
-//           System.out.println(e.toString());
-//       }
-       frame.setVisible(true);
+//       JFrame frame = new JFrame("Game");
+//       JTextArea text = new JTextArea(100, 10);
+//       JTextArea input = new JTextArea(50, 10);
+//       text.setEditable(false);
+//       input.setEditable(true);
+//       frame.setSize(100, 20);
+//       frame.add(text);
+//       
+//       // TODO: can only print stuff on it but couldn't run with the app
+//       PrintStream printStream = new PrintStream(new CustomOutputStream(text));
+//       System.setOut(printStream);
+//       System.setErr(printStream);
+//       PrintStream standardOut = System.out;
+//       standardOut.println("this is run");
+////       HangmanApp obj = new HangmanApp();
+////       try {
+////           obj.main();
+////       }
+////       catch (IOException | AWTException | InterruptedException e){
+////           System.out.println(e.toString());
+////       }
+//       frame.setVisible(true);
+        Main window = new Main();
+        window.setVisible(true);
    }
 
     public static String getCode() throws IOException

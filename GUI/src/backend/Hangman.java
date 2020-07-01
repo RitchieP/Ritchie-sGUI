@@ -34,7 +34,8 @@ public class Hangman
         mysteryWord = "windows";
         currentGuess = initializeCurrentGuess();
     }
-
+    
+    // TODO: this will also read the title
     public void initializeStreams() throws IOException
     {
         try

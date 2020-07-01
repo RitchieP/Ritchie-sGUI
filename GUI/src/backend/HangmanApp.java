@@ -82,15 +82,16 @@ public class HangmanApp extends Hangman
     }
     
     public void buttonDecider(char input, javax.swing.JTextArea area) {
-        if (input == 'Y') {
+        area.setText("");
+        // TODO: the word might contains y
+        if (input == 'y') {
             this.startGame();
-        }else if (!this.gameOver()){
+        }else {
             if (this.isGuessed(input))
             {
                 System.out.println ("Try again. Character already guessed");
     //            input = (sc.next().toLowerCase()).charAt(0);
             }else {
-                area.setText("");
                 if (this.playGuess(input))
                 {
                     System.out.println ("Good guess!");
@@ -100,10 +101,12 @@ public class HangmanApp extends Hangman
                     System.out.println ("Character not in the word.");
                 }
             }
-            this.question();
-        }else {
+        }
+        if (this.gameOver()){
             System.out.println ();
             System.out.println ("Enter Y to keep playing" + " or anything else to exit.");
+        }else {
+            this.question();
         }
     }
 }

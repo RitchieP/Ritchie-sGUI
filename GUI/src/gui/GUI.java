@@ -20,7 +20,7 @@ import java.awt.AWTException;
 import java.io.PrintStream;
 
 
-public class GUI {
+public class GUI extends HangmanApp{
     
     private static JButton button;
     private static JLabel code;
@@ -82,7 +82,7 @@ public class GUI {
     }
     
     
-   public static void mainPageTwo() {
+   public void mainPageTwo() {
 //       JFrame frame = new JFrame("Game");
 //       JTextArea text = new JTextArea(100, 10);
 //       JTextArea input = new JTextArea(50, 10);
@@ -107,7 +107,7 @@ public class GUI {
 //       frame.setVisible(true);
         Main window = new Main();
         window.setVisible(true);
-        new HangmanApp().startGame();
+        window.app.startGame();
         
         
 //        MainBackend app = new MainBackend();
@@ -146,26 +146,6 @@ public class GUI {
         return display;
     }
 }
-
-
-class ActionForButton implements ActionListener {
-
-    //This is the button function
-    @Override
-    public void actionPerformed (ActionEvent e)
-    {
-        GUI.mainPageTwo();
-//        try
-//        {
-//            GUI.mainPage();
-//        }
-//        catch (IOException e1)
-//        {
-//            System.out.println ("File cannot be found");
-//        }
-    }
-}
-
 
 class CustomOutputStream extends OutputStream {
     private JTextArea textArea;

@@ -13,7 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import java.io.OutputStream;
+import backend.Hangman;
 import backend.HangmanApp;
+import backend.MainBackend;
 import java.awt.AWTException;
 import java.io.PrintStream;
 
@@ -30,7 +32,7 @@ public class GUI {
     
     public static void main(String[] args)
     {
-        intro();
+        intro(); 
     }
     
     public static void intro() {
@@ -105,6 +107,10 @@ public class GUI {
 //       frame.setVisible(true);
         Main window = new Main();
         window.setVisible(true);
+        new HangmanApp().startGame();
+        
+        
+//        MainBackend app = new MainBackend();
    }
 
     public static String getCode() throws IOException

@@ -22,10 +22,16 @@ public class Hangman
     private static FileReader fileReader;
     private static BufferedReader bufferedFileReader;
 
-    public Hangman() throws IOException                     //To except if the file is not found
+    public Hangman()                     //To except if the file is not found
     {
-        initializeStreams();
-        mysteryWord = pickWord();
+        try {
+            initializeStreams();
+        }catch (IOException e) {
+            System.out.println(e.toString());
+        }
+        
+//        mysteryWord = pickWord();
+        mysteryWord = "windows";
         currentGuess = initializeCurrentGuess();
     }
 

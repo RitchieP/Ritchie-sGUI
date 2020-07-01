@@ -5,6 +5,9 @@
  */
 package gui;
 
+import backend.Hangman;
+import backend.HangmanApp;
+import backend.MainBackend;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -22,6 +25,10 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        PrintStream printStream = new PrintStream(new CustomOutputStream(jTextArea1));
+        System.setOut(printStream);
+        System.setErr(printStream);
+        PrintStream standardOut = System.out;
     }
 
     /**
@@ -97,13 +104,10 @@ public class Main extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String ans = jTextField1.getText();
-        System.out.println(ans);
-        PrintStream printStream = new PrintStream(new CustomOutputStream(jTextArea1));
-        System.setOut(printStream);
-        System.setErr(printStream);
-        PrintStream standardOut = System.out;
-        standardOut.println(ans);
-        standardOut.println(ans);
+        char guess = ans.toLowerCase().charAt(0);
+        System.out.println ();
+        new HangmanApp().buttonDecider(guess, jTextArea1);
+        jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -149,17 +153,17 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
-
-class CustomOutputStream extends OutputStream {
-    private JTextArea textArea;
-    
-    public CustomOutputStream(JTextArea textArea) {
-        this.textArea = textArea;
-    }
-    
-    @Override
-    public void write(int b) throws IOException {
-        textArea.append(String.valueOf((char)b));
-        textArea.setCaretPosition(textArea.getDocument().getLength());
-    }
-}
+//
+//class CustomOutputStream extends OutputStream {
+//    private JTextArea textArea;
+//    
+//    public CustomOutputStream(JTextArea textArea) {
+//        this.textArea = textArea;
+//    }
+//    
+//    @Override
+//    public void write(int b) throws IOException {
+//        textArea.append(String.valueOf((char)b));
+//        textArea.setCaretPosition(textArea.getDocument().getLength());
+//    }
+//}

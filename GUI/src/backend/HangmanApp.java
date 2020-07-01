@@ -5,8 +5,29 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class HangmanApp
+public class HangmanApp extends Hangman
 {
+    public HangmanApp() {
+        super();
+    }
+    
+    public void startGame() {
+        System.out.println ("Welcome to Hangman by Ritchie!");
+        boolean doYouWantToPlay = true;
+        
+        System.out.println ("Let's Begin!");
+        System.out.println ();
+        this.question();
+    }
+    
+    // TODO: this print a new layout everytime
+    public void question() {
+        System.out.println (this.drawPicture());
+        System.out.println ();
+        System.out.println (this.getFormalCurrentGuess());
+        System.out.println (this.mysteryWord);
+    }
+    
     public static void main(String[] args) throws IOException, AWTException, InterruptedException
     {
         Scanner sc = new Scanner (System.in);
@@ -59,5 +80,30 @@ public class HangmanApp
             doYouWantToPlay = (response == 'Y');
         }
     }
-
+    
+    public void buttonDecider(char input, javax.swing.JTextArea area) {
+        if (input == 'Y') {
+            this.startGame();
+        }else if (!this.gameOver()){
+            if (this.isGuessed(input))
+            {
+                System.out.println ("Try again. Character already guessed");
+    //            input = (sc.next().toLowerCase()).charAt(0);
+            }else {
+                area.setText("");
+                if (this.playGuess(input))
+                {
+                    System.out.println ("Good guess!");
+                }
+                else
+                {
+                    System.out.println ("Character not in the word.");
+                }
+            }
+            this.question();
+        }else {
+            System.out.println ();
+            System.out.println ("Enter Y to keep playing" + " or anything else to exit.");
+        }
+    }
 }

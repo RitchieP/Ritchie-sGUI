@@ -12,17 +12,20 @@ import java.io.PrintStream;
  *
  * @author Autumn
  */
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame 
+{
     public HangmanApp app;
 
     /**
      * Creates new form Main
      */
-    public Main() {
+    public Main() 
+    {
         initComponents();
-        PrintStream printStream = new PrintStream(new CustomOutputStream(jTextArea1));
-        System.setOut(printStream);
-        System.setErr(printStream);
+        PrintStream printStream = new PrintStream(new CustomOutputStream(jTextArea1)); // create an output stream
+        System.setOut(printStream); // redirect the output stream
+        System.setErr(printStream); // redirect the input stream
+        // after this all System.out.println method will print to the text area
         this.app = new HangmanApp();
     }
 
@@ -142,12 +145,14 @@ public class Main extends javax.swing.JFrame {
             System.out.println("You did not enter anything.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    // quit button
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    
+    // reset button
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         new GUI().mainPage();
@@ -162,7 +167,8 @@ public class Main extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

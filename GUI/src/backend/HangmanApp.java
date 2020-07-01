@@ -7,8 +7,9 @@ import java.util.Scanner;
 
 public class HangmanApp extends Hangman
 {
-    public HangmanApp() {
-        super();
+    public HangmanApp() 
+    {
+        super(); // call the parent class constructor
     }
     
     public static void main(String[] args) throws IOException, AWTException, InterruptedException
@@ -64,27 +65,36 @@ public class HangmanApp extends Hangman
         }
     }
     
-    public void startGame() {
+    // initiate the game
+    public void startGame() 
+    {
         System.out.println ("Welcome to Hangman by Ritchie!");
         System.out.println ("Let's Begin!");
         System.out.println ();
         this.question();
     }
     
-    public void question() {
+    // print the question out
+    // this will repeat several times so better to make it into a method
+    public void question() 
+    {
         System.out.println (this.drawPicture());
         System.out.println ();
         System.out.println (this.getFormalCurrentGuess());
         System.out.println (this.mysteryWord);
     }
     
-    public boolean buttonDecider(char input, javax.swing.JTextArea area) {
-        area.setText("");
+    // decide which action to take after the confirm button in the Main gui is clicked
+    public boolean buttonDecider(char input, javax.swing.JTextArea area) 
+    {
+        area.setText(""); // clear the text area
         
         if (this.isGuessed(input))
         {
             System.out.println ("Try again. Character already guessed");
-        }else {
+        }
+        else 
+        {
             if (this.playGuess(input))
             {
                 System.out.println ("Good guess!");
@@ -94,15 +104,19 @@ public class HangmanApp extends Hangman
                 System.out.println ("Character not in the word.");
             }
         }
-        
-        if (this.gameOver()){
+        System.out.println(); // leave a line space
+        if (this.gameOver()) 
+        {
             System.out.println ();
             System.out.println ("Press the exit button to exit.");
             System.out.println("Press the reset button to replay.");
             return false;
-        }else {
-            this.question();
         }
+        else 
+        {
+            this.question(); // print the question
+        }
+        
         return true;
     }
 }

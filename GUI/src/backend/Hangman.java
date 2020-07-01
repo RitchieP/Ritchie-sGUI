@@ -14,7 +14,7 @@ public class Hangman
 {
     String mysteryWord;
     StringBuilder currentGuess;
-    ArrayList<Character> previousGuess = new ArrayList<>(); //Guessed word will be held in this array list
+    ArrayList<Character> previousGuess = new ArrayList<>(); //Guessed character will be held in this array list
     ArrayList<String> dictionary = new ArrayList<>();       //Word bank
 
     int maxTries = 6, currentTry = 0;
@@ -24,14 +24,17 @@ public class Hangman
 
     public Hangman()                     //To except if the file is not found
     {
+        this.initInformation();
+    }
+    
+    private void initInformation() {
         try {
             initializeStreams();
         }catch (IOException e) {
             System.out.println(e.toString());
         }
         
-//        mysteryWord = pickWord();
-        mysteryWord = "windows";
+        mysteryWord = pickWord();
         currentGuess = initializeCurrentGuess();
     }
     

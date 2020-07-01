@@ -11,23 +11,6 @@ public class HangmanApp extends Hangman
         super();
     }
     
-    public void startGame() {
-        System.out.println ("Welcome to Hangman by Ritchie!");
-        boolean doYouWantToPlay = true;
-        
-        System.out.println ("Let's Begin!");
-        System.out.println ();
-        this.question();
-    }
-    
-    // TODO: this print a new layout everytime
-    public void question() {
-        System.out.println (this.drawPicture());
-        System.out.println ();
-        System.out.println (this.getFormalCurrentGuess());
-        System.out.println (this.mysteryWord);
-    }
-    
     public static void main(String[] args) throws IOException, AWTException, InterruptedException
     {
         Scanner sc = new Scanner (System.in);
@@ -53,7 +36,7 @@ public class HangmanApp extends Hangman
                 char guess = (sc.next().toLowerCase()).charAt(0);
                 System.out.println ();
 
-                //check ifa the character have been guessed
+                //check if the character have been guessed
                 while (game.isGuessed(guess))
                 {
                     System.out.println ("Try again. Character already guessed");
@@ -81,32 +64,45 @@ public class HangmanApp extends Hangman
         }
     }
     
-    public void buttonDecider(char input, javax.swing.JTextArea area) {
+    public void startGame() {
+        System.out.println ("Welcome to Hangman by Ritchie!");
+        System.out.println ("Let's Begin!");
+        System.out.println ();
+        this.question();
+    }
+    
+    public void question() {
+        System.out.println (this.drawPicture());
+        System.out.println ();
+        System.out.println (this.getFormalCurrentGuess());
+        System.out.println (this.mysteryWord);
+    }
+    
+    public boolean buttonDecider(char input, javax.swing.JTextArea area) {
         area.setText("");
-        // TODO: the word might contains y
-        if (input == 'y') {
-            this.startGame();
+        
+        if (this.isGuessed(input))
+        {
+            System.out.println ("Try again. Character already guessed");
         }else {
-            if (this.isGuessed(input))
+            if (this.playGuess(input))
             {
-                System.out.println ("Try again. Character already guessed");
-    //            input = (sc.next().toLowerCase()).charAt(0);
-            }else {
-                if (this.playGuess(input))
-                {
-                    System.out.println ("Good guess!");
-                }
-                else
-                {
-                    System.out.println ("Character not in the word.");
-                }
+                System.out.println ("Good guess!");
+            }
+            else
+            {
+                System.out.println ("Character not in the word.");
             }
         }
+        
         if (this.gameOver()){
             System.out.println ();
-            System.out.println ("Enter Y to keep playing" + " or anything else to exit.");
+            System.out.println ("Press the exit button to exit.");
+            System.out.println("Press the reset button to replay.");
+            return false;
         }else {
             this.question();
         }
+        return true;
     }
 }

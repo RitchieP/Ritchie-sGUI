@@ -5,13 +5,8 @@
  */
 package gui;
 
-import backend.Hangman;
 import backend.HangmanApp;
-import backend.MainBackend;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import javax.swing.JTextArea;
 
 /**
  *
@@ -28,7 +23,6 @@ public class Main extends javax.swing.JFrame {
         PrintStream printStream = new PrintStream(new CustomOutputStream(jTextArea1));
         System.setOut(printStream);
         System.setErr(printStream);
-        PrintStream standardOut = System.out;
         this.app = new HangmanApp();
     }
 
@@ -50,6 +44,8 @@ public class Main extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ritchie's Hangman");
+        setAlwaysOnTop(true);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -124,16 +120,24 @@ public class Main extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    // confirm button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String ans = jTextField1.getText();
-        char guess = ans.toLowerCase().charAt(0);
-        System.out.println ();
-        this.app.buttonDecider(guess, jTextArea1);
-        jTextField1.setText("");
+        if (!ans.isEmpty()) {
+            char guess = ans.toLowerCase().charAt(0);
+            System.out.println ();
+            boolean enable = this.app.buttonDecider(guess, jTextArea1);
+            jTextField1.setText("");
+            jTextField1.setEditable(enable);
+            jButton1.setEnabled(enable);
+        } else {
+            System.out.println("You did not enter anything.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -141,8 +145,8 @@ public class Main extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        // TODO: this is just for temporary
-        this.app.buttonDecider('0', jTextArea1);
+        new GUI().mainPage();
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -190,17 +194,3 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
-//
-//class CustomOutputStream extends OutputStream {
-//    private JTextArea textArea;
-//    
-//    public CustomOutputStream(JTextArea textArea) {
-//        this.textArea = textArea;
-//    }
-//    
-//    @Override
-//    public void write(int b) throws IOException {
-//        textArea.append(String.valueOf((char)b));
-//        textArea.setCaretPosition(textArea.getDocument().getLength());
-//    }
-//}

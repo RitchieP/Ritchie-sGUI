@@ -5,6 +5,11 @@
  */
 package gui;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import javax.swing.JTextArea;
+
 /**
  *
  * @author Autumn
@@ -93,6 +98,12 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         String ans = jTextField1.getText();
         System.out.println(ans);
+        PrintStream printStream = new PrintStream(new CustomOutputStream(jTextArea1));
+        System.setOut(printStream);
+        System.setErr(printStream);
+        PrintStream standardOut = System.out;
+        standardOut.println(ans);
+        standardOut.println(ans);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -137,4 +148,18 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+}
+
+class CustomOutputStream extends OutputStream {
+    private JTextArea textArea;
+    
+    public CustomOutputStream(JTextArea textArea) {
+        this.textArea = textArea;
+    }
+    
+    @Override
+    public void write(int b) throws IOException {
+        textArea.append(String.valueOf((char)b));
+        textArea.setCaretPosition(textArea.getDocument().getLength());
+    }
 }

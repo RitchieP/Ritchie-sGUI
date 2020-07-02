@@ -1,0 +1,10 @@
+giraffe
+graphics
+keyboard
+motorcycle
+potato
+bread
+linux
+windows
+apple
+android

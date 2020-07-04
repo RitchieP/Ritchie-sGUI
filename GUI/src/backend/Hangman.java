@@ -29,12 +29,16 @@ public class Hangman
     
     private void initInformation() {
         try {
-            initializeStreams();
+            mysteryWord = this.pickRandomWord();
         }catch (IOException e) {
-            System.out.println(e.toString());
+            System.out.println("Retrieving information from local file... ");
+            try {
+                initializeStreams();
+            }catch (IOException k) {
+                System.out.println(k.toString());
+            }
+            mysteryWord = this.pickWord();
         }
-        
-        mysteryWord = pickWord();
         currentGuess = initializeCurrentGuess();
     }
     
@@ -59,6 +63,18 @@ public class Hangman
         {
             System.out.println ("Could not init stream");
         }
+    }
+    
+    public String pickRandomWord() throws IOException
+    {
+        String word = "";
+        
+        do {
+            RandomWord random = new RandomWord();
+            word =  random.mainFunc();
+        }while (word.isEmpty());
+        
+        return word;
     }
 
     public String pickWord()

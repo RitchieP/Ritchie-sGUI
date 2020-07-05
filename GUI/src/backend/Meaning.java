@@ -10,6 +10,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 import javax.net.ssl.HttpsURLConnection;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -29,13 +33,30 @@ public class Meaning {
     }
     
     public static void main(String[] args) {
-        Meaning meaning = new Meaning("", "hello"); // insert your api key in the first positional argument
+        Meaning meaning = new Meaning("", "poufs"); // insert your api key in the first positional argument
         try {
-            System.out.println(meaning.sendGet());
-        }catch (IOException e) {
+            String response = meaning.sendGet();
+            response = meaning.parseJSON(response);
+            response = meaning.processString(response);
+            System.out.println(response);
+            
+        }catch (IOException | ParseException e) {
             System.out.println(e.toString());
         }
-        
+    }
+    
+    // TODO: this method returns similar words when the meaning of the word is not found, instead of the warning message
+    public static String getMeaning(String word) {
+        Meaning meaning = new Meaning("", word); // insert your api key in the first positional argument
+        try {
+            String response = meaning.sendGet();
+            response = meaning.parseJSON(response);
+            response = meaning.processString(response);
+            return response;
+            
+        }catch (IOException | ParseException | ClassCastException e) {
+            return "Sorry. Could not find definition.";
+        }
     }
     
     private URL setURL() {
@@ -63,5 +84,42 @@ public class Meaning {
         }else {
             return Integer.toString(conn.getResponseCode());
         }
+    }
+    
+    public String parseJSON(String response) throws org.json.simple.parser.ParseException {
+        JSONParser parser = new JSONParser();
+        Object json = parser.parse(response);
+        JSONArray tmp = (JSONArray)json;
+        try {
+            JSONObject arr = (JSONObject)tmp.get(0);
+        
+            JSONObject str = (JSONObject)arr.get("meta");
+            str = (JSONObject)str.get("app-shortdef");
+            tmp = (JSONArray)str.get("def");
+
+            StringBuilder outcome = new StringBuilder();
+
+            for (Object def: tmp) {
+                outcome.append((String)def);
+            }
+
+            return ("Meaning: \n" + outcome.toString());
+        }catch (ClassCastException e) {
+            return ("Similar words: \n" + tmp.toString());
+        }
+        
+    }
+    
+    public String processString(String raw) {
+        StringBuilder result = new StringBuilder();
+        String[] tmp = raw.split("\\{/*\\w+\\}");
+        for (String substring: tmp) {
+            if (!substring.isEmpty()) {
+                String toAppend = "\n" + substring.trim();
+                result.append(toAppend);
+            }   
+        }
+        
+        return result.toString();
     }
 }

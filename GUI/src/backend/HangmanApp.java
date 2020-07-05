@@ -31,6 +31,7 @@ public class HangmanApp extends Hangman
                 System.out.println ();
                 System.out.println (game.getFormalCurrentGuess());
                 System.out.println (game.mysteryWord);
+                System.out.println(game.meaning);
 
                 //Get the guess
                 System.out.println ("Enter a character.");

@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class Hangman
 {
     String mysteryWord;
+    String meaning;
     StringBuilder currentGuess;
     ArrayList<Character> previousGuess = new ArrayList<>(); //Guessed character will be held in this array list
     ArrayList<String> dictionary = new ArrayList<>();       //Word bank
@@ -39,6 +40,7 @@ public class Hangman
             }
             mysteryWord = this.pickWord();
         }
+        this.getMeaning();
         currentGuess = initializeCurrentGuess();
     }
     
@@ -83,6 +85,10 @@ public class Hangman
         int wordIndex = Math.abs(rand.nextInt() % dictionary.size());
         return dictionary.get(wordIndex);
     }
+    
+    public void getMeaning() {
+        this.meaning = Meaning.getMeaning(this.mysteryWord);
+    }
 
     public StringBuilder initializeCurrentGuess()
     {
@@ -111,12 +117,14 @@ public class Hangman
         if (didWeWin())
         {
             System.out.println ("Congratulations! You won.");
+            System.out.println(this.meaning + "\n");
             return true;
         }
         else if (didWeLose())
         {
             System.out.println ("Sorry you lost.");
             System.out.println ("The mystery word is " + mysteryWord);
+            System.out.println(this.meaning + "\n");
             return true;
         }
         return false;

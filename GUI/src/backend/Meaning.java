@@ -21,10 +21,10 @@ import org.json.simple.parser.ParseException;
  */
 public class Meaning {
     
-    public String app_id;
     public String app_key;
     public URL url;
     public String word;
+    public boolean valid;
     
     public Meaning(String app_key, String word) {
         this.app_key = app_key;
@@ -33,9 +33,10 @@ public class Meaning {
     }
     
     public static void main(String[] args) {
-        Meaning meaning = new Meaning("", "poufs"); // insert your api key in the first positional argument
+        Meaning meaning = new Meaning("", "hello"); // insert your api key in the first positional argument
         try {
             String response = meaning.sendGet();
+            System.out.println(response);
             response = meaning.parseJSON(response);
             response = meaning.processString(response);
             System.out.println(response);
@@ -54,7 +55,8 @@ public class Meaning {
             response = meaning.processString(response);
             return response;
             
-        }catch (IOException | ParseException | ClassCastException e) {
+        }catch (IOException | ParseException e) {
+            System.out.println(e);
             return "Sorry. Could not find definition.";
         }
     }
@@ -92,7 +94,6 @@ public class Meaning {
         JSONArray tmp = (JSONArray)json;
         try {
             JSONObject arr = (JSONObject)tmp.get(0);
-        
             JSONObject str = (JSONObject)arr.get("meta");
             str = (JSONObject)str.get("app-shortdef");
             tmp = (JSONArray)str.get("def");

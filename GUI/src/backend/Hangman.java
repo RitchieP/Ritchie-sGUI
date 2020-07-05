@@ -30,6 +30,7 @@ public class Hangman
     
     private void initInformation() {
         try {
+            System.out.println("Getting information from the internet...");
             mysteryWord = this.pickRandomWord();
         }catch (IOException e) {
             System.out.println("Retrieving information from local file... ");
@@ -40,7 +41,7 @@ public class Hangman
             }
             mysteryWord = this.pickWord();
         }
-        this.getMeaning();
+        this.setMeaning();
         currentGuess = initializeCurrentGuess();
     }
     
@@ -86,7 +87,7 @@ public class Hangman
         return dictionary.get(wordIndex);
     }
     
-    public void getMeaning() {
+    public void setMeaning() {
         this.meaning = Meaning.getMeaning(this.mysteryWord);
     }
 

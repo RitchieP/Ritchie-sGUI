@@ -108,7 +108,7 @@ public class HangmanApp extends Hangman
         if (this.gameOver()) 
         {
             System.out.println ();
-            System.out.println ("Press the exit button to exit.");
+            System.out.println ("Press the quit button to exit.");
             System.out.println("Press the reset button to replay.");
             return false;
         }

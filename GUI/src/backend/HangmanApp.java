@@ -63,6 +63,7 @@ public class HangmanApp extends Hangman
             Character response = (sc.next().toUpperCase()).charAt(0);
             doYouWantToPlay = (response == 'Y');
         }
+        sc.close();
     }
     
     // initiate the game

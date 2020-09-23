@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class Hangman
 {
     String mysteryWord;
+    String meaning;
     StringBuilder currentGuess;
     ArrayList<Character> previousGuess = new ArrayList<>(); //Guessed character will be held in this array list
     ArrayList<String> dictionary = new ArrayList<>();       //Word bank
@@ -29,12 +30,18 @@ public class Hangman
     
     private void initInformation() {
         try {
-            initializeStreams();
+            System.out.println("Getting information from the internet...");
+            mysteryWord = this.pickRandomWord();
         }catch (IOException e) {
-            System.out.println(e.toString());
+            System.out.println("Retrieving information from local file... ");
+            try {
+                initializeStreams();
+            }catch (IOException k) {
+                System.out.println(k.toString());
+            }
+            mysteryWord = this.pickWord();
         }
-        
-        mysteryWord = pickWord();
+        this.setMeaning();
         currentGuess = initializeCurrentGuess();
     }
     
@@ -60,12 +67,28 @@ public class Hangman
             System.out.println ("Could not init stream");
         }
     }
+    
+    public String pickRandomWord() throws IOException
+    {
+        String word = "";
+        
+        do {
+            RandomWord random = new RandomWord();
+            word =  random.mainFunc();
+        }while (word.isEmpty());
+        
+        return word;
+    }
 
     public String pickWord()
     {
         Random rand = new Random();
         int wordIndex = Math.abs(rand.nextInt() % dictionary.size());
         return dictionary.get(wordIndex);
+    }
+    
+    public void setMeaning() {
+        this.meaning = Meaning.getMeaning(this.mysteryWord);
     }
 
     public StringBuilder initializeCurrentGuess()
@@ -95,12 +118,14 @@ public class Hangman
         if (didWeWin())
         {
             System.out.println ("Congratulations! You won.");
+            System.out.println(this.meaning + "\n");
             return true;
         }
         else if (didWeLose())
         {
             System.out.println ("Sorry you lost.");
             System.out.println ("The mystery word is " + mysteryWord);
+            System.out.println(this.meaning + "\n");
             return true;
         }
         return false;

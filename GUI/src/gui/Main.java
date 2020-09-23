@@ -48,7 +48,6 @@ public class Main extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ritchie's Hangman");
-        setAlwaysOnTop(true);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -139,6 +138,7 @@ public class Main extends javax.swing.JFrame
             System.out.println ();
             boolean enable = this.app.buttonDecider(guess, jTextArea1);
             jTextField1.setText("");
+            jTextArea1.setEditable(!enable);
             jTextField1.setEditable(enable);
             jButton1.setEnabled(enable);
         } else {
@@ -161,6 +161,9 @@ public class Main extends javax.swing.JFrame
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+        if (jTextField1.isEditable()) {
+            jButton1ActionPerformed(evt);
+        }
     }//GEN-LAST:event_jTextField1ActionPerformed
     
     
